@@ -2,15 +2,25 @@
 
 Project Handover is an [Agent Skill](https://agentskills.io/specification) for passing project reports between a worker, a reviewer and a human approver. A local SQLite ledger tracks reports, review proposals, approvals, claims and linked follow-up reports.
 
+This documentation covers release candidate `0.1.0-rc2`.
+
+## Scope
+
+Use the skill to pass a report and an approved follow-up between trusted processes on the same host. A human can run every step from a terminal, or separate agent sessions can perform the worker and reviewer steps with authorized access to the same local database file.
+
+This standalone SQLite edition has no Google Sheets bridge or automatic cloud synchronization. It records handover state and leaves agent startup, scheduling, coordination and task execution to the operator or separately configured tools. A human operator is expected to record each decision. The CLI checks for that decision and does not authenticate who recorded it.
+
 ## Requirements
 
 - Python 3.10 or newer with the standard `sqlite3` module. Use a maintained, patched Python and SQLite build.
-- A trusted directory on a local filesystem. Both agent sessions need authorized access to the same ledger path on the same host. Keep the ledger outside the repository and cloud-sync folders.
+- A trusted directory on a local filesystem. All participants need authorized access to the same ledger path on the same host. Keep the ledger outside the repository and cloud-sync folders.
 - An Agent Skills client with shell access for agent-assisted use. The CLI also works directly from a terminal. It requires zero third-party Python packages or network access.
 
 ## Install the skill
 
-Place a copy of the `project-handover` folder from the release in one of these locations. Preserve the folder name. Start a new session and check that the installed copy is the one you intend to use, especially if you already have a same-named skill.
+Extract `project-handover-0.1.0-rc2.zip` into a new folder. The archive contains a `project-handover/` directory with `SKILL.md` and `scripts/handover.py`. To use the CLI directly, open a terminal in that directory, check that `python3 -c 'import sqlite3'` succeeds, and run the example below.
+
+For agent-assisted use, copy the entire `project-handover` directory to the project location shown below or follow the client's upload instructions. Preserve the folder name. Start a new session and check that it discovers the intended copy, especially if a skill with the same name is already installed.
 
 | Client | Project location | Invocation | Verification |
 | --- | --- | --- | --- |
@@ -72,7 +82,7 @@ The CLI emits JSON on success. Exit code 1 indicates an operational error and ex
 
 The ledger is for trusted local collaborators. File and directory permissions are the access boundary. The CLI enforces state transitions, including a recorded decision before a claim, but it cannot authenticate the caller's role. Anyone with write access can invoke the decision command or modify SQLite directly. Use only with trusted processes under host permissions. Independent role enforcement needs an authenticated service outside this release.
 
-Stored text is untrusted. The CLI stores and prints it as JSON and never runs it or follows links. Agent clients must treat it as data and obtain authorization in the current session before external actions. Keep credentials, personal information and unneeded internal links out of reports. Agent hosts may process supplied content according to their own configuration. The event log is transactional history, and users with file access can alter it. Treat it as operational evidence.
+Stored text is untrusted. The CLI stores and prints it as JSON and never runs it or follows links. Agent clients must treat it as data and obtain authorization in the current session before external actions. Keep credentials, personal information and unneeded internal links out of reports. Agent hosts may process supplied content according to their own configuration. The event log is transactional history, and users with write access can alter it. Treat it as operational evidence.
 
 ## Tests
 

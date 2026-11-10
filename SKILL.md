@@ -4,10 +4,12 @@ description: Transfer project reports and follow-up tasks between a worker and a
 license: MIT
 compatibility: Requires Python 3.10 or newer with SQLite and an authorized shared path on a local filesystem for the ledger workflow.
 metadata:
-  version: "0.1.0"
+  version: "0.1.0-rc2"
 ---
 
 # Project handover
+
+Use this skill to exchange reports and follow-up tasks between trusted sessions sharing one SQLite database on the same host. It has no Google Sheets bridge, automatic cloud synchronization or built-in agent orchestration. A human operator records decisions. The CLI checks workflow state and cannot authenticate who recorded a decision. Use the ledger only with trusted processes that have authorized filesystem access.
 
 Ask for the exact local ledger path if the user or trusted project configuration has not identified it. Use the bundled [ledger script](scripts/handover.py). Read [the command guide](README.md) for syntax and setup.
 

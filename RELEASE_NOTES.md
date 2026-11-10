@@ -1,6 +1,6 @@
 # Project Handover 0.1.0-rc3
 
-Third release candidate for the standalone local SQLite edition. The complete [English guide](README.md) and [German guide](README.de.md) cover installation, a hands-on Quick Start, the shared workflow, troubleshooting, maintenance and security boundaries. The CLI, database schema and tests are identical to `0.1.0-rc2`.
+Third release candidate for the standalone local SQLite edition. The complete [English guide](README.en.md) and [German guide](README.md) cover installation, a hands-on Quick Start, the shared workflow, troubleshooting, maintenance and security boundaries. The CLI, database schema and tests are identical to `0.1.0-rc2`.
 
 - Record reports, attach an immutable review proposal, and require an explicit decision before a worker can claim a task.
 - Track state changes in SQLite. Repeating the same operation is safe, and completion records the next report in the same transaction.
